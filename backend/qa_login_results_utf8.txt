@@ -1,0 +1,13 @@
+﻿superadmin => OK role=SUPER_ADMIN branch=
+admin_hyd => OK role=EMPLOYEE branch=
+admin_blr => OK role=EMPLOYEE branch=
+emp_orders1 => OK role=BRANCH_ADMIN branch=
+emp_warehouse1 => OK role=BRANCH_ADMIN branch=
+emp_logistics1 => OK role=BRANCH_ADMIN branch=
+emp_procurement1 => OK role=BRANCH_ADMIN branch=
+emp_finance1 => OK role=BRANCH_ADMIN branch=
+emp_support1 => OK role=BRANCH_ADMIN branch=
+retailer1 => OK role=RETAILER branch=
+retailer2 => OK role=RETAILER branch=
+supplier1 => OK role=SUPPLIER branch=
+supplier2 => OK role=SUPPLIER branch=

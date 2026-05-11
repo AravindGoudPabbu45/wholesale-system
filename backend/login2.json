@@ -1,0 +1,1 @@
+﻿{"timestamp":"2026-03-30T07:25:19.941843600","status":400,"error":"Bad Request","message":"Malformed JSON request body.","path":"/api/auth/login","correlationId":"b921e517"}
