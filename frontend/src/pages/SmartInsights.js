@@ -83,16 +83,6 @@ const SmartInsights = () => {
         }
     };
 
-    const getUrgencyColor = (urgency) => {
-        switch (urgency) {
-            case 'CRITICAL': return '#ef4444';
-            case 'HIGH': return '#f97316';
-            case 'MEDIUM': return '#eab308';
-            case 'LOW': return '#22c55e';
-            default: return '#8b8fa3';
-        }
-    };
-
     const getStockStatus = (quantity, threshold) => {
         if (quantity <= 0) return { label: 'Out of Stock', color: '#ef4444', icon: <FiAlertTriangle /> };
         if (quantity <= threshold * 0.5) return { label: 'Critical', color: '#ef4444', icon: <FiTrendingDown /> };

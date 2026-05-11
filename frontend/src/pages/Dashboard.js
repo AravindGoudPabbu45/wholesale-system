@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getSuperAdminDashboard, getBranchAdminDashboard, getBranchAnalytics, getMyOrders, getMyTickets, getOrderPipeline, getDashboardAlerts } from '../services/api';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { FiLayers, FiUsers, FiShoppingCart, FiDollarSign, FiActivity, FiAlertTriangle, FiCheckCircle, FiTruck, FiPackage, FiNavigation, FiClock, FiCpu, FiArrowRight } from 'react-icons/fi';
+import { FiLayers, FiUsers, FiShoppingCart, FiDollarSign, FiActivity, FiAlertTriangle, FiCheckCircle, FiTruck, FiPackage, FiNavigation, FiClock, FiArrowRight } from 'react-icons/fi';
 
 const COLORS = ['#4f8cff', '#a855f7', '#34d399', '#fb923c', '#f87171', '#22d3ee'];
 

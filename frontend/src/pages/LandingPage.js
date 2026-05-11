@@ -305,16 +305,16 @@ const LandingPage = () => {
                         </div>
                         <div className="footer-col">
                             <h4>Company</h4>
-                            <a href="#">About Us</a>
-                            <a href="#">Contact</a>
-                            <a href="#">Careers</a>
-                            <a href="#">Blog</a>
+                            <button className="footer-link-btn" onClick={() => {}}>About Us</button>
+                            <button className="footer-link-btn" onClick={() => {}}>Contact</button>
+                            <button className="footer-link-btn" onClick={() => {}}>Careers</button>
+                            <button className="footer-link-btn" onClick={() => {}}>Blog</button>
                         </div>
                         <div className="footer-col">
                             <h4>Support</h4>
-                            <a href="#">Help Center</a>
-                            <a href="#">Privacy Policy</a>
-                            <a href="#">Terms of Service</a>
+                            <button className="footer-link-btn" onClick={() => {}}>Help Center</button>
+                            <button className="footer-link-btn" onClick={() => {}}>Privacy Policy</button>
+                            <button className="footer-link-btn" onClick={() => {}}>Terms of Service</button>
                             <Link to="/login">Login</Link>
                         </div>
                     </div>

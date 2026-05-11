@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllRetailers, getPendingRetailers, approveRetailer, rejectRetailer } from '../services/api';
+import { getAllRetailers, approveRetailer, rejectRetailer } from '../services/api';
 import { FiCheck, FiX, FiUserCheck, FiUsers, FiTruck, FiSearch, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 import API from '../services/api';
 

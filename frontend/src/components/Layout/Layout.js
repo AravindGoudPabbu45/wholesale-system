@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiHome, FiBox, FiShoppingCart, FiUsers, FiTruck, FiMessageSquare, FiHelpCircle, FiBarChart2, FiDollarSign, FiLogOut, FiMenu, FiX, FiLayers, FiActivity, FiUserCheck, FiCpu, FiNavigation, FiBriefcase } from 'react-icons/fi';
+import { FiHome, FiBox, FiShoppingCart, FiUsers, FiTruck, FiMessageSquare, FiHelpCircle, FiBarChart2, FiDollarSign, FiLogOut, FiMenu, FiX, FiLayers, FiActivity, FiCpu, FiNavigation, FiBriefcase } from 'react-icons/fi';
 import NotificationBell from '../NotificationBell';
 import './Layout.css';
 
@@ -18,8 +18,6 @@ const Layout = ({ children }) => {
     /** Get navigation items based on user role */
     const getNavItems = () => {
         const role = user?.role;
-        const branchId = user?.branchId;
-
         const common = [
             { to: '/dashboard', icon: <FiHome />, label: 'Dashboard' },
             { to: '/messages', icon: <FiMessageSquare />, label: 'Messages' },

@@ -23,7 +23,7 @@ const Employees = () => {
     const emptyForm = { username: '', email: '', password: '', fullName: '', phone: '', branchId: '', department: '', designation: '', salary: '' };
     const [form, setForm] = useState(emptyForm);
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { fetchData(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
     const fetchData = async () => {
         try {
             const [empRes, branchRes] = await Promise.all([
@@ -111,7 +111,7 @@ const Employees = () => {
 
     useEffect(() => {
         if (filterDept !== 'ALL' && !departments.includes(filterDept)) setFilterDept('ALL');
-    }, [filterBranch]);
+    }, [filterBranch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const filtered = branchFiltered.filter(e =>
         (filterDept === 'ALL' || e.department === filterDept) &&

@@ -3,12 +3,11 @@ import axios from 'axios';
 /**
  * Axios API instance with JWT interceptor.
  * Automatically attaches Authorization header from localStorage.
- * Detects Cloudflare tunnel URLs and uses the backend tunnel URL.
+ * Uses REACT_APP_API_URL env var in production, falls back to localhost in dev.
  */
-const BACKEND_TUNNEL = 'https://physician-pct-execute-diesel.trycloudflare.com';
 const getBaseURL = () => {
-    if (window.location.hostname.includes('trycloudflare.com')) {
-        return `${BACKEND_TUNNEL}/api`;
+    if (process.env.REACT_APP_API_URL) {
+        return process.env.REACT_APP_API_URL;
     }
     return `http://${window.location.hostname}:8080/api`;
 };

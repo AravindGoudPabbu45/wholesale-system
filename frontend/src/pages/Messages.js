@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getContacts, getConversation, sendMessage, markAsRead, getBranches } from '../services/api';
-import { FiSend, FiMessageSquare, FiFilter, FiCheckSquare, FiSquare, FiUsers } from 'react-icons/fi';
+import { FiSend, FiMessageSquare, FiCheckSquare, FiSquare, FiUsers } from 'react-icons/fi';
 import { useToast } from '../context/ToastContext';
 
 const Messages = () => {

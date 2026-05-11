@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPayments, getAllSales, recordPayment } from '../services/api';
-import API from '../services/api';
-import { FiDollarSign, FiCreditCard, FiTrendingUp, FiCheckCircle, FiClock, FiAlertTriangle, FiCheck } from 'react-icons/fi';
+import { FiDollarSign, FiCreditCard, FiTrendingUp, FiCheckCircle, FiClock, FiCheck } from 'react-icons/fi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const COLORS = ['#34d399', '#fb923c', '#4f8cff', '#a855f7', '#f87171'];
@@ -39,7 +38,6 @@ const Finance = () => {
   const totalRevenue = sales.reduce((sum, s) => sum + (s.revenue || 0), 0);
   const totalProfit = sales.reduce((sum, s) => sum + (s.profit || 0), 0);
   const totalCost = sales.reduce((sum, s) => sum + (s.cost || 0), 0);
-  const totalPaid = paidPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
   const totalPending = pendingPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
   const profitMargin = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : 0;
 

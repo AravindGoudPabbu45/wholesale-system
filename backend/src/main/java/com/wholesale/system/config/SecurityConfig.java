@@ -63,11 +63,21 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of(
-            "http://localhost:*",
-            "https://*.trycloudflare.com",
-            "http://192.168.*:*"
-        ));
+
+        // Build allowed origin patterns from environment + defaults
+        List<String> patterns = new java.util.ArrayList<>();
+        patterns.add("http://localhost:*");
+        patterns.add("http://192.168.*:*");
+
+        // Add deployed frontend URLs from CORS_ORIGINS env var
+        String corsOrigins = System.getenv("CORS_ORIGINS");
+        if (corsOrigins != null && !corsOrigins.isBlank()) {
+            for (String origin : corsOrigins.split(",")) {
+                patterns.add(origin.trim());
+            }
+        }
+
+        configuration.setAllowedOriginPatterns(patterns);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

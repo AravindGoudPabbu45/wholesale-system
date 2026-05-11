@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getAllRetailers, getPendingRetailers, approveRetailer, rejectRetailer } from '../services/api';
-import { FiCheck, FiX, FiUserCheck } from 'react-icons/fi';
+import { getAllRetailers, approveRetailer, rejectRetailer } from '../services/api';
+import { FiCheck, FiX } from 'react-icons/fi';
 
 const Retailers = () => {
     const [retailers, setRetailers] = useState([]);

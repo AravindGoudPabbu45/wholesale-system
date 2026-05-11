@@ -17,8 +17,8 @@ const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [orderForm, setOrderForm] = useState({ branchId: '', notes: '', items: [{ productId: '', quantity: 1 }] });
 
-    useEffect(() => { fetchInit(); }, []);
-    useEffect(() => { if (selectedBranch && user.role !== 'RETAILER') fetchOrders(); }, [selectedBranch]);
+    useEffect(() => { fetchInit(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => { if (selectedBranch && user.role !== 'RETAILER') fetchOrders(); }, [selectedBranch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchInit = async () => {
         try {

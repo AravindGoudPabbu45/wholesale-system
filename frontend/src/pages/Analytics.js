@@ -13,8 +13,8 @@ const Analytics = () => {
     const [tab, setTab] = useState('forecast');
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => { fetchBranches(); }, []);
-    useEffect(() => { if (selectedBranch) fetchData(); }, [selectedBranch]);
+    useEffect(() => { fetchBranches(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => { if (selectedBranch) fetchData(); }, [selectedBranch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchBranches = async () => {
         try { const res = await getBranches(); setBranches(res.data); if (!selectedBranch && res.data.length > 0) setSelectedBranch(res.data[0].id); } catch (e) { } setLoading(false);

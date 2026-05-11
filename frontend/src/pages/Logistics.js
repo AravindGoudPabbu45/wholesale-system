@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getOrdersByBranch, getMyOrders, updateOrderStatus, getBranches } from '../services/api';
+import { getOrdersByBranch, updateOrderStatus, getBranches } from '../services/api';
 import { FiPackage, FiTruck, FiNavigation, FiCheckCircle, FiMapPin, FiClock, FiRefreshCw } from 'react-icons/fi';
 import './Logistics.css';
 
@@ -22,8 +22,8 @@ const Logistics = () => {
   const [loading, setLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState(null);
 
-  useEffect(() => { fetchInit(); }, []);
-  useEffect(() => { if (selectedBranch) fetchOrders(); }, [selectedBranch]);
+  useEffect(() => { fetchInit(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (selectedBranch) fetchOrders(); }, [selectedBranch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchInit = async () => {
     try {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getInventoryByBranch, getLowStockByBranch, getAllLowStock, getBranches, getStockMovements } from '../services/api';
-import { FiAlertTriangle, FiActivity, FiPackage, FiCheckCircle, FiSearch, FiBox, FiEdit, FiPlusCircle } from 'react-icons/fi';
+import { FiAlertTriangle, FiPackage, FiCheckCircle, FiSearch, FiBox, FiEdit, FiPlusCircle } from 'react-icons/fi';
 import { adjustStock, updateThreshold } from '../services/api';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
@@ -26,8 +26,8 @@ const Inventory = () => {
     const [adjustReason, setAdjustReason] = useState('');
     const [newThreshold, setNewThreshold] = useState(0);
 
-    useEffect(() => { fetchBranches(); }, []);
-    useEffect(() => { if (selectedBranch) fetchBranchData(selectedBranch); }, [selectedBranch]);
+    useEffect(() => { fetchBranches(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => { if (selectedBranch) fetchBranchData(selectedBranch); }, [selectedBranch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchBranches = async () => {
         try {

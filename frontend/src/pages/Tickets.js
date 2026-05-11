@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getAllTickets, getTicketsByBranch, getMyTickets, createTicket, updateTicket, getBranches } from '../services/api';
-import { FiPlus, FiEdit2 } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 
 const Tickets = () => {
     const { user } = useAuth();
@@ -12,7 +12,7 @@ const Tickets = () => {
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [form, setForm] = useState({ subject: '', description: '', priority: 'MEDIUM', branchId: '' });
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { fetchData(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
     const fetchData = async () => {
         try {
             const branchRes = await getBranches(); setBranches(branchRes.data);

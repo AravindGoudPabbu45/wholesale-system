@@ -1,0 +1,10 @@
+target/
+.git
+.gitignore
+*.md
+*.txt
+*.json
+*.sql
+*.py
+*.ps1
+.mvn/wrapper/maven-wrapper.jar

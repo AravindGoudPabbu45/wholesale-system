@@ -13,7 +13,7 @@ const Procurement = () => {
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [form, setForm] = useState({ branchId: '', supplierId: '1', productId: '', quantity: '', expectedDate: '', notes: '' });
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { fetchData(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
     const fetchData = async () => {
         try {
             const [prodRes, branchRes] = await Promise.all([getProducts(), getBranches()]);
