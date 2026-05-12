@@ -26,5 +26,10 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose port
 EXPOSE 8080
 
+# JVM memory tuning for Render free tier (512MB limit)
+# -Xmx350m: max heap 350MB, leaves ~160MB for JVM overhead/metaspace
+# -XX:+UseSerialGC: lower memory footprint GC for small containers
+ENV JAVA_OPTS="-Xmx350m -Xms200m -XX:+UseSerialGC -XX:MaxMetaspaceSize=100m"
+
 # Run with production profile
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
