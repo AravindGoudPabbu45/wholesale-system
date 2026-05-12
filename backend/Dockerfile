@@ -27,9 +27,9 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # JVM memory tuning for Render free tier (512MB container limit)
-# Total JVM footprint must stay under ~480MB to avoid OOM kill
-# Heap: 256m, Metaspace: 64m, CodeCache: 32m, threads ~30MB = ~382MB total
-ENV JAVA_OPTS="-Xmx256m -Xms128m -XX:+UseSerialGC -XX:MaxMetaspaceSize=64m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
+# Metaspace 64m caused OOM — Spring Boot needs ~128m for class loading
+# Heap: 200m + Metaspace: 128m + CodeCache: 32m + native ~50m = ~410m total
+ENV JAVA_OPTS="-Xmx200m -Xms128m -XX:+UseSerialGC -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
 
 # Run with production profile
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
