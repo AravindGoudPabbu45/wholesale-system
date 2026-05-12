@@ -1,7 +1,7 @@
 # ============================================================
 # Multi-stage Dockerfile for Spring Boot Backend
 # Stage 1: Build the JAR with Maven
-# Stage 2: Run the JAR with a lightweight JRE
+# Stage 2: Run with IBM Semeru (OpenJ9) — uses 40-60% less RAM than HotSpot
 # ============================================================
 
 # --- Stage 1: Build ---
@@ -16,8 +16,8 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-# --- Stage 2: Run ---
-FROM eclipse-temurin:17-jre-alpine
+# --- Stage 2: Run with OpenJ9 (much lower memory footprint) ---
+FROM ibm-semeru-runtimes:open-17-jre-focal
 WORKDIR /app
 
 # Copy the built JAR
@@ -26,11 +26,12 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose port
 EXPOSE 8080
 
-# JVM memory tuning for Render free tier (512MB container limit)
-# Key insight: default 200 Tomcat threads × 1MB stack = 200MB!
-# With 10 threads + 256k stacks: only 2.5MB for stacks
-# Heap 200m + Meta 128m + Code 32m + Stacks 2.5m + Native 30m ≈ 393m
-ENV JAVA_OPTS="-Xmx200m -Xms128m -Xss256k -XX:+UseSerialGC -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
+# OpenJ9 memory tuning for Render free tier (512MB limit)
+# OpenJ9 uses shared classes cache + compressed refs for much lower footprint
+# -Xmx256m: heap max 256MB
+# -Xshareclasses: share class data to reduce metaspace
+# -Xquickstart: faster startup
+ENV JAVA_OPTS="-Xmx256m -Xms128m -Xss256k -XX:MaxMetaspaceSize=128m -Xshareclasses:cacheDir=/tmp/javasharedresources -Xquickstart -Djava.security.egd=file:/dev/./urandom"
 
 # Run with production profile
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
