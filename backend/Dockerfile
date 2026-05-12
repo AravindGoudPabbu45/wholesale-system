@@ -26,10 +26,10 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose port
 EXPOSE 8080
 
-# JVM memory tuning for Render free tier (512MB limit)
-# -Xmx350m: max heap 350MB, leaves ~160MB for JVM overhead/metaspace
-# -XX:+UseSerialGC: lower memory footprint GC for small containers
-ENV JAVA_OPTS="-Xmx400m -Xms200m -XX:+UseSerialGC -XX:MaxMetaspaceSize=100m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+# JVM memory tuning for Render free tier (512MB container limit)
+# Total JVM footprint must stay under ~480MB to avoid OOM kill
+# Heap: 256m, Metaspace: 64m, CodeCache: 32m, threads ~30MB = ~382MB total
+ENV JAVA_OPTS="-Xmx256m -Xms128m -XX:+UseSerialGC -XX:MaxMetaspaceSize=64m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
 
 # Run with production profile
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
