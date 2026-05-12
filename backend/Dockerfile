@@ -23,9 +23,6 @@ WORKDIR /app
 # Copy the built JAR
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose port
-EXPOSE 8080
-
 # OpenJ9 memory tuning for Render free tier (512MB limit)
 # OpenJ9 uses shared classes cache + compressed refs for much lower footprint
 # -Xmx256m: heap max 256MB
