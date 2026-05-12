@@ -27,9 +27,10 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # JVM memory tuning for Render free tier (512MB container limit)
-# Metaspace 64m caused OOM — Spring Boot needs ~128m for class loading
-# Heap: 200m + Metaspace: 128m + CodeCache: 32m + native ~50m = ~410m total
-ENV JAVA_OPTS="-Xmx200m -Xms128m -XX:+UseSerialGC -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
+# Key insight: default 200 Tomcat threads × 1MB stack = 200MB!
+# With 10 threads + 256k stacks: only 2.5MB for stacks
+# Heap 200m + Meta 128m + Code 32m + Stacks 2.5m + Native 30m ≈ 393m
+ENV JAVA_OPTS="-Xmx200m -Xms128m -Xss256k -XX:+UseSerialGC -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
 
 # Run with production profile
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
