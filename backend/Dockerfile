@@ -29,7 +29,7 @@ EXPOSE 8080
 # JVM memory tuning for Render free tier (512MB limit)
 # -Xmx350m: max heap 350MB, leaves ~160MB for JVM overhead/metaspace
 # -XX:+UseSerialGC: lower memory footprint GC for small containers
-ENV JAVA_OPTS="-Xmx350m -Xms200m -XX:+UseSerialGC -XX:MaxMetaspaceSize=100m"
+ENV JAVA_OPTS="-Xmx400m -Xms200m -XX:+UseSerialGC -XX:MaxMetaspaceSize=100m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 
 # Run with production profile
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
