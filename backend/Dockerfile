@@ -16,19 +16,17 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-# --- Stage 2: Run with OpenJ9 (much lower memory footprint) ---
-FROM ibm-semeru-runtimes:open-17-jre-focal
+# --- Stage 2: Run with lightweight Alpine JRE to avoid build timeouts ---
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # Copy the built JAR
 COPY --from=build /app/target/*.jar app.jar
 
-# OpenJ9 memory tuning for Render free tier (512MB limit)
-# OpenJ9 uses shared classes cache + compressed refs for much lower footprint
-# -Xmx256m: heap max 256MB
-# -Xshareclasses: share class data to reduce metaspace
-# -Xquickstart: faster startup
-ENV JAVA_OPTS="-Xmx256m -Xms128m -Xss256k -XX:MaxMetaspaceSize=128m -Xshareclasses:cacheDir=/tmp/javasharedresources -Xquickstart -Djava.security.egd=file:/dev/./urandom"
+# JVM memory tuning for Render free tier (512MB container limit)
+# HotSpot footprint optimized:
+# Heap 200m + Meta 128m + Code 32m + Stacks (10 threads * 256k = 2.5m) + Native = ~390m
+ENV JAVA_OPTS="-Xmx200m -Xms128m -Xss256k -XX:+UseSerialGC -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.security.egd=file:/dev/./urandom"
 
 # Run with production profile
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar --spring.profiles.active=prod"]
